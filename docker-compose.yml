@@ -134,7 +134,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/qbittorrent:/config:rw
-      - ${DOCKERSTORAGEDIR}/torrents:/data/torrents:rw
+      - ${DOCKERSTORAGEDIR}/torrents/completed:/data/torrents:rw
 
 # jellyseerr - https://hotio.dev/containers/jellyseerr/
 # mkdir /volume1/docker/appdata/jellyseerr
@@ -162,11 +162,61 @@ services:
       - ${DOCKERCONFDIR}/jellyseerr:/config
       - ${DOCKERSTORAGEDIR}/media:/data/media
 
+# notifiarr - https://hub.docker.com/r/golift/notifiarr/
+# mkdir -m=00775 /volume1/docker/appdata/notifiarr
+  notifiarr:
+    container_name: notifiarr
+    hostname: ${HOSTNAME}
+    image: golift/notifiarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    user: ${PUID}:${PGID}
+    ports:
+      - 5454:5454
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKERCONFDIR}/notifiarr:/config
+      - /var/run/utmp:/var/run/utmp          # optional, only needed if you want to count users
+    privileged: true                         # Optional, only needed for Snapshots
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+
+# flaresolverr - https://hub.docker.com/r/flaresolverr/flaresolverr
+# mkdir -m=00775 /volume1/docker/appdata/flaresolverr
+  flaresolverr:
+    container_name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - 8191:8191
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKERCONFDIR}/flaresolverr:/config
+
 # jellyfin - https://hotio.dev/containers/jellyfin/
-#
-# Don't forget to create the directory, change chown command if needed (the user:group part)
 # sudo -u docker mkdir -m=00775 /volume1/docker/appdata/jellyfin
-#
   jellyfin:
     container_name: jellyfin
     image: ghcr.io/hotio/jellyfin:latest
