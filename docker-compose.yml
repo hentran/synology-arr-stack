@@ -134,7 +134,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/qbittorrent:/config:rw
-      - ${DOCKERSTORAGEDIR}/torrents/completed:/data/torrents:rw
+      - ${DOCKERSTORAGEDIR}/torrents:/data/torrents:rw
 
 # jellyseerr - https://hotio.dev/containers/jellyseerr/
 # mkdir /volume1/docker/arr-apps/jellyseerr
