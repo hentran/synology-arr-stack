@@ -1,7 +1,7 @@
 version: "3.2"
 services:
 # prowlarr - https://hotio.dev/containers/prowlarr/
-# mkdir /volume1/docker/appdata/prowlarr
+# mkdir /volume1/docker/arr-apps/prowlarr
   prowlarr:
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr:latest
@@ -27,7 +27,7 @@ services:
       - ${DOCKERCONFDIR}/prowlarr:/config:rw
 
 # radarr - https://hotio.dev/containers/radarr/
-# mkdir /volume1/docker/appdata/radarr
+# mkdir /volume1/docker/arr-apps/radarr
   radarr:
     container_name: radarr
     image: ghcr.io/hotio/radarr:latest
@@ -54,7 +54,7 @@ services:
       - ${DOCKERSTORAGEDIR}:/data
 
 # sonarr - https://hotio.dev/containers/sonarr/
-# mkdir /volume1/docker/appdata/sonarr
+# mkdir /volume1/docker/arr-apps/sonarr
   sonarr:
     container_name: sonarr
     image: ghcr.io/hotio/sonarr:latest
@@ -81,7 +81,7 @@ services:
       - ${DOCKERSTORAGEDIR}:/data
 
 # bazarr - https://hotio.dev/containers/bazarr/
-# mkdir /volume1/docker/appdata/bazarr
+# mkdir /volume1/docker/arr-apps/bazarr
   bazarr:
     container_name: bazarr
     image: ghcr.io/hotio/bazarr:latest
@@ -108,7 +108,7 @@ services:
       - ${DOCKERSTORAGEDIR}/media:/data/media
       
 # qbittorrent - https://hotio.dev/containers/qbittorrent/
-# mkdir /volume1/docker/appdata/qbittorrent
+# mkdir /volume1/docker/arr-apps/qbittorrent
   qbittorrent:
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent:latest
@@ -137,7 +137,7 @@ services:
       - ${DOCKERSTORAGEDIR}/torrents/completed:/data/torrents:rw
 
 # jellyseerr - https://hotio.dev/containers/jellyseerr/
-# mkdir /volume1/docker/appdata/jellyseerr
+# mkdir /volume1/docker/arr-apps/jellyseerr
   jellyseerr:
     container_name: jellyseerr
     image: ghcr.io/hotio/jellyseerr:latest
@@ -163,7 +163,7 @@ services:
       - ${DOCKERSTORAGEDIR}/media:/data/media
 
 # notifiarr - https://hub.docker.com/r/golift/notifiarr/
-# mkdir -m=00775 /volume1/docker/appdata/notifiarr
+# mkdir -m=00775 /volume1/docker/arr-apps/notifiarr
   notifiarr:
     container_name: notifiarr
     hostname: ${HOSTNAME}
@@ -189,7 +189,7 @@ services:
       - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
 
 # flaresolverr - https://hub.docker.com/r/flaresolverr/flaresolverr
-# mkdir -m=00775 /volume1/docker/appdata/flaresolverr
+# mkdir -m=00775 /volume1/docker/arr-apps/flaresolverr
   flaresolverr:
     container_name: flaresolverr
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -216,7 +216,7 @@ services:
       - ${DOCKERCONFDIR}/flaresolverr:/config
 
 # jellyfin - https://hotio.dev/containers/jellyfin/
-# sudo -u docker mkdir -m=00775 /volume1/docker/appdata/jellyfin
+# sudo -u docker mkdir -m=00775 /volume1/docker/arr-apps/jellyfin
   jellyfin:
     container_name: jellyfin
     image: ghcr.io/hotio/jellyfin:latest
